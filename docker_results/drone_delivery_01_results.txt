@@ -1,0 +1,96 @@
+Welcome to the Grocery Express Delivery Service!
+> //coupon valid before purchase but expire before finishing delivery
+> // create a single store
+> make_store,fresh_market,57000,0,0
+OK:change_completed
+> display_stores
+name:fresh_market,revenue:57000,location_x:0.000000,location_y:0.000000
+OK:display_completed
+> // create multiple items to be sold by stores
+> sell_item,fresh_market,bacon,3
+OK:change_completed
+> sell_item,fresh_market,lamb,6
+OK:change_completed
+> sell_item,fresh_market,mushrooms,3
+OK:change_completed
+> sell_item,fresh_market,salmon,4
+OK:change_completed
+> sell_item,fresh_market,sushi,3
+OK:change_completed
+> display_items,fresh_market
+bacon,3
+lamb,6
+mushrooms,3
+salmon,4
+sushi,3
+OK:display_completed
+> // create a single pilot to control the drones
+> make_pilot,alan2,Alan,Alexander,111-111-1111,111-11-1111,lic_2,4
+OK:change_completed
+> display_pilots
+name:Alan_Alexander,phone:111-111-1111,taxID:111-11-1111,licenseID:lic_2,experience:4
+OK:display_completed
+> // create a single drone to deliver the orders
+> make_drone,fresh_market,1,50,2
+OK:change_completed
+> display_drones,fresh_market
+droneID:1,total_cap:50,num_orders:0,remaining_cap:50,trips_left:2,speed:1
+OK:display_completed
+> // create a single customers to purchase items
+> make_customer,carli2,Chanel,Cortez,666-666-6666,4,100,6,8
+OK:change_completed
+> display_customers
+name:Chanel_Cortez,phone:666-666-6666,rating:4,credit:100,location_x:6.000000,location_y:8.000000
+OK:display_completed
+> // assign pilots to fly the drones
+> fly_drone,fresh_market,1,alan2
+OK:change_completed
+> display_drones,fresh_market
+droneID:1,total_cap:50,num_orders:0,remaining_cap:50,trips_left:2,flown_by:Alan_Alexander,speed:1
+OK:display_completed
+> //coupon_init
+> coupon_init,1,2.0,2.0,2.0,2.0,2.0,7
+> // create multiple orders as requested by customers
+> start_order,fresh_market,ordA,1,carli2
+OK:change_completed
+> start_order,fresh_market,ordB,1,carli2
+OK:change_completed
+> display_orders,fresh_market
+orderID:ordA
+orderID:ordB
+OK:display_completed
+> // add multiple items to the orders
+> request_item,fresh_market,ordA,bacon,3,5
+OK:change_completed
+> request_item,fresh_market,ordA,lamb,1,10
+OK:change_completed
+> display_orders,fresh_market
+orderID:ordA
+item_name:bacon,total_quantity:3,total_cost:15,total_weight:9
+item_name:lamb,total_quantity:1,total_cost:10,total_weight:6
+orderID:ordB
+OK:display_completed
+> //apply_coupon
+> apply_coupon,carli2,1,fresh_market,ordA
+OK:change_completed
+> //purchase order
+> purchase_order,fresh_market,ordA
+ERROR:store_cannot_deliver_the_order_in_time
+> display_stores
+name:fresh_market,revenue:56995,location_x:0.000000,location_y:0.000000
+OK:display_completed
+> display_customers
+name:Chanel_Cortez,phone:666-666-6666,rating:4,credit:105,location_x:6.000000,location_y:8.000000
+OK:display_completed
+> display_orders,fresh_market
+orderID:ordB
+OK:display_completed
+> display_drones,fresh_market
+droneID:1,total_cap:50,num_orders:1,remaining_cap:50,trips_left:2,flown_by:Alan_Alexander,speed:1
+OK:display_completed
+> display_pilots
+name:Alan_Alexander,phone:111-111-1111,taxID:111-11-1111,licenseID:lic_2,experience:4
+OK:display_completed
+> stop
+stop acknowledged
+simulation terminated
